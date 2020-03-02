@@ -1,0 +1,36 @@
+{
+  "name": "create-vue-library",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "module": "dist/index.esm.js",
+  "scripts": {
+    "build": "rollup --config rollup.config.js"
+  },
+  "keywords": [],
+  "author": "uniquexiaobai",
+  "license": "ISC",
+  "prettier": {
+    "printWidth": 80
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.6",
+    "@babel/polyfill": "^7.8.3",
+    "@babel/preset-env": "^7.8.6",
+    "rollup": "^1.32.0",
+    "rollup-plugin-alias": "^2.2.0",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-eslint": "^7.0.0",
+    "rollup-plugin-filesize": "^6.2.1",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-replace": "^2.2.0",
+    "rollup-plugin-serve": "^1.0.1",
+    "rollup-plugin-uglify": "^6.0.4",
+    "rollup-plugin-vue": "^5.1.6",
+    "vue": "^2.6.11",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "dependencies": {}
+}
