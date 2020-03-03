@@ -1,25 +1,29 @@
 import path from 'path';
 import fs from 'fs';
-import { promisify } from 'util';
 import execa from 'execa';
 import listr from 'listr';
 import chalk from 'chalk';
-import ncp from 'ncp';
 import { projectInstall } from 'pkg-install';
-import { logError } from './utils';
+import { logError, mkdir, copy, access } from './utils';
 
-const access = promisify(fs.access);
-const copy = promisify(ncp);
+async function createProjectDirectory(options) {
+	try {
+		await mkdir(options.projectDirectory);
+	} catch (err) {
+		return Promise.reject(new Error('Failed to initialize project directory'));
+	}
+	return;
+}
 
 async function copyTemplateFiles(options) {
-	return copy(options.templateDirectory, options.targetDirectory, {
+	return copy(options.templateDirectory, options.projectDirectory, {
 		clobber: false,
 	});
 }
 
 async function initGit(options) {
 	const result = await execa('git', ['init'], {
-		cwd: options.targetDirectory,
+		cwd: options.projectDirectory,
 	});
 	if (result.failed) {
 		return Promise.reject(new Error('Failed to initialize git'));
@@ -28,13 +32,6 @@ async function initGit(options) {
 }
 
 export async function createProject(options) {
-  // ! mkdir options.projectName
-
-	options = {
-		...options,
-		targetDirectory: options.targetDirectory || process.cwd(),
-	};
-
 	const currentFileUrl = import.meta.url;
 	const templateDir = path.resolve(
 		new URL(currentFileUrl).pathname,
@@ -54,6 +51,10 @@ export async function createProject(options) {
 
 	const tasks = new listr([
 		{
+			title: 'Initialize project directory',
+			task: () => createProjectDirectory(options),
+		},
+		{
 			title: 'Copy project files',
 			task: () => copyTemplateFiles(options),
 		},
@@ -63,7 +64,7 @@ export async function createProject(options) {
 		},
 		{
 			title: 'Install dependencies',
-			task: () => projectInstall({ cwd: options.targetDirectory }),
+			task: () => projectInstall({ cwd: options.projectDirectory }),
 		},
 	]);
 

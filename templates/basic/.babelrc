@@ -9,9 +9,11 @@
 					"chrome": "67",
 					"safari": "11.1"
 				},
-				"corejs": "2",
+        "corejs": "2",
+        "modules": false,
 				"useBuiltIns": "usage"
 			}
 		]
-	]
+  ],
+  "plugins": ["@babel/external-helpers"]
 }

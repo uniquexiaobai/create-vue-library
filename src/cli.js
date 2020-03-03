@@ -1,7 +1,7 @@
 import arg from 'arg';
 import { prompt } from 'inquirer';
 import chalk from 'chalk';
-import { logError } from './utils';
+import { logError, getAbsolutePath, isFileOrDirExists } from './utils';
 import { createProject } from './main';
 import pkg from '../package';
 
@@ -25,9 +25,11 @@ const getHelp = () => chalk`
 `;
 
 function parseArgsIntoOptions(rowArgs) {
+	const projectName = rowArgs[2];
+	let projectDirectory;
 	let args;
 
-	if (!rowArgs[2]) {
+	if (!projectName) {
 		console.error('Please specify the project directory:');
 		console.log(
 			`  ${chalk.cyan('create-vue-library')} ${chalk.green(
@@ -45,6 +47,8 @@ function parseArgsIntoOptions(rowArgs) {
 		);
 		process.exit(1);
 	}
+
+	projectDirectory = getAbsolutePath(projectName);
 
 	try {
 		args = arg(
@@ -77,9 +81,24 @@ function parseArgsIntoOptions(rowArgs) {
 	}
 
 	return {
-		projectName: rowArgs[2],
+		projectName,
+		projectDirectory,
 		template: args['--template'],
 	};
+}
+
+async function checkIsProjectDirectoryValid(options) {
+	const isExists = await isFileOrDirExists(options.projectDirectory);
+
+	if (isExists) {
+		console.log(
+			`Uh oh! Looks like there's already a directory called ${chalk.red(
+				options.projectName
+			)}.`
+		);
+		console.log('Please try a different name or delete that folder.');
+		process.exit(1);
+	}
 }
 
 async function proptForMissingOptions(options) {
@@ -105,6 +124,9 @@ async function proptForMissingOptions(options) {
 
 export async function cli(rowArgs) {
 	let options = parseArgsIntoOptions(rowArgs);
+
+	await checkIsProjectDirectoryValid(options);
+
 	options = await proptForMissingOptions(options);
 	await createProject(options);
 }

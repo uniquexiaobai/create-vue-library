@@ -1,11 +1,9 @@
-import MyComp from "./my-comp.vue";
-import MyComp2 from "./my-comp2.vue";
+import HelloWorld from "./components/HelloWorld";
 
 function install(Vue) {
-  Vue.component("MyComp", MyComp);
-  Vue.component("MyComp2", MyComp2);
+  Vue.component("hello-world", HelloWorld);
 }
 
-export default { install };
+export default { HelloWorld, install };
 
-export { MyComp, MyComp2 };
+export { HelloWorld };

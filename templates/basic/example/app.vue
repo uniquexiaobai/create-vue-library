@@ -1,28 +1,18 @@
 <template>
   <div>
-    <p>hello I am parcel vue</p>
-    <MyComp />
-    <MyComp2 />
+    <HelloWorld />
   </div>
 </template>
 
 <script>
-import { MyComp } from "../.";
-import { MyComp2 } from "../.";
+import { HelloWorld } from "../.";
 export default {
   name: "App",
   components: {
-    MyComp,
-    MyComp2
-  },
-  mounted() {
-    console.log("mounted");
+    HelloWorld
   }
 };
 </script>
 
 <style scoped>
-p {
-  color: red;
-}
 </style>
