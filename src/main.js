@@ -32,6 +32,11 @@ async function initGit(options) {
 }
 
 export async function createProject(options) {
+	if (options.template === 'storybook') {
+		console.log('It will come soon');
+		process.exit(0);
+	}
+
 	const currentFileUrl = import.meta.url;
 	const templateDir = path.resolve(
 		new URL(currentFileUrl).pathname,

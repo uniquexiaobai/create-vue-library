@@ -1,0 +1,22 @@
+{
+  "name": "example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel index.html --no-source-maps"
+  },
+  "keywords": [],
+  "author": "uniquexiaobai",
+  "license": "ISC",
+  "alias": {
+    "vue": "../node_modules/vue"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.7",
+    "parcel": "^1.12.4"
+  },
+  "dependencies": {
+    "vue-hot-reload-api": "^2.3.4"
+  }
+}

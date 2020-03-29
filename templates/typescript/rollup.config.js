@@ -4,6 +4,7 @@ import json from '@rollup/plugin-json';
 import babel from 'rollup-plugin-babel';
 import vue from 'rollup-plugin-vue';
 import filesize from 'rollup-plugin-filesize';
+import typescript from 'rollup-plugin-typescript2';
 import replace from '@rollup/plugin-replace';
 import alias from '@rollup/plugin-alias';
 import { terser } from 'rollup-plugin-terser';
@@ -20,11 +21,15 @@ const projectName = 'my-comp';
 const input = 'src/index.js';
 const getPlugins = target => {
 	const plugins = [
-		resolve({ extensions: ['.js', '.vue'] }),
+		resolve({ extensions: ['.js', '.ts', '.vue'] }),
 		commonjs(),
 		babel({
 			exclude: 'node_modules/**',
 			externalHelpers: true,
+		}),
+		typescript({
+			experimentalDecorators: true,
+			module: 'es2015',
 		}),
 		vue({
 			css: true,
