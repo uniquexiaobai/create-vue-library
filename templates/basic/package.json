@@ -7,7 +7,7 @@
 	"main": "dist/index.js",
 	"module": "dist/index.esm.js",
 	"scripts": {
-		"build:watch": "rollup --watch --config rollup.config.js",
+		"start": "rollup --watch --config rollup.config.js",
 		"build": "rimraf dist && rollup --config rollup.config.js",
 		"lint": "npm run build",
 		"prepare": "npm run build"
